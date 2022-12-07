@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "417799463118",
+    "project_id": "e-business-atk",
+    "storage_bucket": "e-business-atk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417799463118:android:367c7f4d0ea3f1e31c709f",
+        "android_client_info": {
+          "package_name": "com.example.e_business_atk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417799463118-v2rmr61vfv8m2l3ikhiik88tv2tqhc29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_business_atk",
+            "certificate_hash": "1013ea035232ab46f3c8132e1d9400b6c89d2d59"
+          }
+        },
+        {
+          "client_id": "417799463118-2fblj3tkq1al5i9i984p50d02kbgil8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFG78G1bvRPT1bKtDpLSRz4D1-yW5kU1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417799463118-2fblj3tkq1al5i9i984p50d02kbgil8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
