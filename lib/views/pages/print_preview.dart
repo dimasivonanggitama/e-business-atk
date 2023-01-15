@@ -1,7 +1,7 @@
 // import 'package:ebusiness_atk_mobile/views/pages/keranjang.dart';
 import 'package:flutter/material.dart';
 
-import 'keranjang.dart';
+import 'cart.dart';
 
 class print_previewPage extends StatefulWidget {
   const print_previewPage({Key? key}) : super(key: key);
@@ -105,13 +105,14 @@ class _print_previewPageState extends State<print_previewPage> {
                               elevation: 5,
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return keranjangPage();
-                                      }
-                                    )
-                                  );
+                                  
+                                    Navigator.push(
+                                      context, MaterialPageRoute(
+                                        builder: (context) {
+                                          return CartPage();
+                                        }
+                                      )
+                                    );
                                 },
                                 borderRadius: BorderRadius.all(Radius.circular(5)),
                                 splashColor: Colors.white.withOpacity(0.3),

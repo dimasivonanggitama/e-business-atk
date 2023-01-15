@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import '/views/components/custom_button.dart';
 import '/views/components/preset_textField.dart';
 
-class ProdukFormField extends StatefulWidget {
+class ProductForm extends StatefulWidget {
   // const produkFormField({Key? key}) : super(key: key);
 
   final String title;
@@ -22,7 +22,7 @@ class ProdukFormField extends StatefulWidget {
   var passingSnapshot;
   final int currentIndex;
 
-  ProdukFormField({
+  ProductForm({
     required this.title, 
     required this.buttonText, 
     this.passingSnapshot, 
@@ -30,10 +30,10 @@ class ProdukFormField extends StatefulWidget {
   });
 
   @override
-  State<ProdukFormField> createState() => _ProdukFormFieldState();
+  State<ProductForm> createState() => _ProdukFormFieldState();
 }
 
-class _ProdukFormFieldState extends State<ProdukFormField> {
+class _ProdukFormFieldState extends State<ProductForm> {
   final TextEditingController namaProdukController = TextEditingController();
   final TextEditingController merekProdukController = TextEditingController();
   final TextEditingController kategoriProdukController = TextEditingController();

@@ -16,9 +16,10 @@ class Unauthorized extends AuthConditionState {
 }
 
 class AuthSuccess extends AuthConditionState {
+  final String status;
   final String uid;
-  AuthSuccess(this.uid);
+  AuthSuccess(this.status, this.uid);
 
   @override
-  List<Object> get props => [uid];
+  List<Object> get props => [status, uid];
 }

@@ -1,7 +1,7 @@
 // import 'package:ebusiness_atk_mobile/views/pages/beliatk_hasilpencarian.dart';
 import 'package:flutter/material.dart';
 
-import 'beliatk_hasilpencarian.dart';
+import 'product_catalogue.dart';
 
 class beliatk_kategoriPage extends StatelessWidget {
 
@@ -95,7 +95,7 @@ class beliatk_kategoriPage extends StatelessWidget {
                                 Navigator.push(
                                   context, MaterialPageRoute(
                                     builder: (context) {
-                                      return beliatk_hasilpencarianPage();
+                                      return ProductCataloguePage();
                                     }
                                   )
                                 );

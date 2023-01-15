@@ -16,7 +16,7 @@ class updateProduk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProdukFormField(
+    return ProductForm(
       title: "Update Produk",
       buttonText: "Update",
       passingSnapshot: passingSnapshot,

@@ -1,4 +1,4 @@
-import 'package:ebusiness_atk_mobile/models/kategoriProduk_model.dart';
+import 'package:ebusiness_atk_mobile/models/productCategory_model.dart';
 import 'package:flutter/material.dart';
 
 class PresetDropdownButton extends StatelessWidget {
@@ -7,7 +7,6 @@ class PresetDropdownButton extends StatelessWidget {
   final currentDropdownValue;
   final String? errorText;
   final String labelText;
-  final Object? itemValue;
   final String? itemText;
 
   PresetDropdownButton({
@@ -15,10 +14,8 @@ class PresetDropdownButton extends StatelessWidget {
     required this.labelText, 
     this.errorText = "",
     this.items,
-    required this.itemValue,
     required this.itemText,
     required this.onChanged,
-    // this.controller
   });
 
   @override
@@ -36,9 +33,7 @@ class PresetDropdownButton extends StatelessWidget {
         items: items!.map((value) {
           return DropdownMenuItem(
             value: value.id,
-            // value: itemValue,
             child: _showItemText(itemText, value)
-            // child: Text('${itemValue}')
           );
         }).toList(),
         onChanged: onChanged,
@@ -47,7 +42,7 @@ class PresetDropdownButton extends StatelessWidget {
   }
 
   _showItemText(itemText, value){
-    if (itemText == "kategori") return Text('${value.kategori}');
+    if (itemText == "kategori") return Text('${value.category}');
     else return Text('[Field name not found!]');
   }
 

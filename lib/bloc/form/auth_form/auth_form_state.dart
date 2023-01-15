@@ -49,6 +49,7 @@ class AuthFormInitial extends AuthFormState {
   final bool isEmailFieldStateInit;
   final bool isEmailFieldValid;
   final bool isFormStateInit;
+  final bool isFormSubmitted;
   final bool isFullNameFieldStateInit;
   final bool isFullNameFieldValid;
   final bool isObscurePasswordToggleOn;
@@ -87,6 +88,7 @@ class AuthFormInitial extends AuthFormState {
     required this.isEmailFieldStateInit,
     required this.isEmailFieldValid,
     required this.isFormStateInit,
+    required this.isFormSubmitted,
     required this.isFullNameFieldStateInit,
     required this.isFullNameFieldValid,
     required this.isObscurePasswordToggleOn,
@@ -126,6 +128,7 @@ class AuthFormInitial extends AuthFormState {
     bool? isEmailFieldStateInit,
     bool? isEmailFieldValid,
     bool? isFormStateInit,
+    bool? isFormSubmitted,
     bool? isFullNameFieldStateInit,
     bool? isFullNameFieldValid,
     bool? isObscurePasswordToggleOn,
@@ -164,6 +167,7 @@ class AuthFormInitial extends AuthFormState {
       isEmailFieldStateInit: isEmailFieldStateInit ?? this.isEmailFieldStateInit,
       isEmailFieldValid: isEmailFieldValid ?? this.isEmailFieldValid,
       isFormStateInit: isFormStateInit ?? this.isFormStateInit,
+      isFormSubmitted: isFormSubmitted ?? this.isFormSubmitted,
       isFullNameFieldStateInit: isFullNameFieldStateInit ?? this.isFullNameFieldStateInit, 
       isFullNameFieldValid: isFullNameFieldValid ?? this.isFullNameFieldValid,
       isObscurePasswordToggleOn: isObscurePasswordToggleOn ?? this.isObscurePasswordToggleOn,
@@ -205,6 +209,7 @@ class AuthFormInitial extends AuthFormState {
     isEmailFieldStateInit,
     isEmailFieldValid,
     isFormStateInit,
+    isFormSubmitted,
     isFullNameFieldStateInit,
     isFullNameFieldValid,
     isObscurePasswordToggleOn,

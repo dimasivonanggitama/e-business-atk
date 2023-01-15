@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:ebusiness_atk_mobile/bloc/auth_condition/auth_condition_bloc.dart';
 import 'package:ebusiness_atk_mobile/models/user_model.dart';
 import 'package:ebusiness_atk_mobile/repository/user_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -37,6 +36,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
     isEmailFieldStateInit: true,
     isEmailFieldValid: false,
     isFormStateInit: true,
+    isFormSubmitted: false,
     isFullNameFieldStateInit: true,
     isFullNameFieldValid: false,
     isObscurePasswordToggleOn: true,
@@ -127,7 +127,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
     );
 
     on<FormInitated>(
-      (event, emit) => _signInTabSelected(emit)
+      (event, emit) => _formInitiated(emit)
     );
 
     on<FormRedirected>(
@@ -139,6 +139,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
 
     on<FormSubmitted>(
       (event, emit) async {
+        // state.currentValue(isFormSubmitted: true);
         if (state.isFormStateInit) emit(
           state.currentValue(
             isAddressFieldStateInit: false,
@@ -168,7 +169,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
           UserModel user = UserModel(
             address: state.addressField,
             email: state.emailField,
-            fullName: state.fullNameField,
+            name: state.fullNameField,
             password: state.passwordField,
             // phoneNumber: state.phoneNumberField
           );
@@ -214,7 +215,10 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
               ));
             }
           }
-        } 
+        }
+        // _formInitiated(emit);
+        // Future.delayed(const Duration(seconds: 5));
+        // state.currentValue(isFormSubmitted: false);
       }
     );
 
@@ -280,7 +284,7 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
 
   _authStarted(Emitter emit) async {
     UserModel user = await _userRepository.getCurrentUser().first;
-    if (user.uid != "uid") {
+    if (user.userID != "uid") {
       // String? displayName = await _userRepository.retrieveUserName(user);
       // emit(AuthenticationSuccess(displayName: displayName));
       emit(state.currentValue(isAuthValid: false)); // turn off the "toggle"
@@ -289,6 +293,8 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormInitial> {
     //   emit(AuthFailure());
     }
   }
+
+  _formInitiated(Emitter emit) => _signInTabSelected(emit);
 
   _signInTabSelected(Emitter emit) {
     emit(

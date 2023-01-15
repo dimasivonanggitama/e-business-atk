@@ -5,29 +5,26 @@ import '../models/user_model.dart';
 // import '../../models/user_model_example_project.dart';
 
 class UserService {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth _dbAuth = FirebaseAuth.instance;
   FirebaseFirestore _dbFirestore = FirebaseFirestore.instance;
 
   setUserData(UserModel userData) async {
-    await _dbFirestore.collection("penggunaJasa").doc(userData.uid).set(userData.toMap());
+    await _dbFirestore.collection("users").doc(userData.userID).set(userData.toMap());
   }
 
   Stream<UserModel> retrieveCurrentUser() {
-    return auth.authStateChanges().map((User? user) {
+    return _dbAuth.authStateChanges().map((User? user) {
       if (user != null) {
-        return UserModel(uid: user.uid, email: user.email);
+        return UserModel(userID: user.uid, email: user.email);
       } else {
-        return  UserModel(uid: "uid");
+        return  UserModel(userID: "uid");
       }
     });
   }
 
-  // Future<List<UserModel>> retrieveUserData() async {
-  //   QuerySnapshot<Map<String, dynamic>> snapshot = await _db.collection("Users").get();
-  //   return snapshot.docs.map(
-  //     (docSnapshot) => UserModel.fromDocumentSnapshot(docSnapshot)
-  //   ).toList();
-  // }
+  Future<DocumentReference> getUserData(String documentID) async {
+    return await _dbFirestore.collection("users").doc(documentID);
+  }
 
   // Future<String> retrieveUserName(UserModel user) async {
   //   DocumentSnapshot<Map<String, dynamic>> snapshot = await _db.collection("Users").doc(user.uid).get();

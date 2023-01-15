@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ebusiness_atk_mobile/views/components/itemTile.dart';
+import 'package:ebusiness_atk_mobile/views/components/custom_product_row.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -46,14 +46,15 @@ class PresetListViewSeparatedBuilder extends StatelessWidget {
             //     ],
             //   ),
             // );
-            return itemTile(
-              gambarProduk: snapshot.data!.docs[index]['gambarProduk'],
-              namaProduk: snapshot.data!.docs[index]['namaProduk'], 
-              merekProduk: snapshot.data!.docs[index]['merekProduk'], 
-              kategoriProduk: snapshot.data!.docs[index]['kategoriProduk'],
-              jumlahStok: snapshot.data!.docs[index]['jumlahStok'], 
-              harga: snapshot.data!.docs[index]['harga'],
-              idProduk: index.toString(),
+            return Container();
+            // return CustomProductRow(
+              // gambarProduk: snapshot.data!.docs[index]['gambarProduk'],
+              // namaProduk: snapshot.data!.docs[index]['namaProduk'], 
+              // merekProduk: snapshot.data!.docs[index]['merekProduk'], 
+              // kategoriProduk: snapshot.data!.docs[index]['kategoriProduk'],
+              // jumlahStok: snapshot.data!.docs[index]['jumlahStok'], 
+              // harga: snapshot.data!.docs[index]['harga'],
+              // idProduk: index.toString(),
               // // onDelete: produk_atk.where('id', isEqualTo: )
               // onDelete: produk_atk.doc().delete()
 
@@ -63,9 +64,9 @@ class PresetListViewSeparatedBuilder extends StatelessWidget {
               //   await myTransaction.delete(snapshot.data!.docs[index].reference);
               // })
 
-              passingSnapshot: snapshot,
+              // passingSnapshot: snapshot,
 
-            );
+            // );
           },
         );
       }

@@ -15,17 +15,20 @@ class AuthConditionBloc extends Bloc<AuthConditionEvent, AuthConditionState> {
     on<CurrentAuthRequested>(
       (event, emit) async {
         UserModel user = await _userRepository.getCurrentUser().first;
-        if (user.uid != "uid") {
+        if (user.userID != "uid") {
           // String? displayName = await _authenticationRepository.retrieveUserName(user);
           // emit(AuthenticationSuccess(displayName: displayName));
-          emit(AuthSuccess(user.uid.toString()));
+
+          UserModel userInfo = await _userRepository.retrieveUserData(user.userID!);
+          emit(AuthSuccess(userInfo.status!, user.userID.toString()));
+          // emit(AuthSuccess(userInfo.status!, user.userID.toString()));
         } else {
           emit(Unauthorized());
         }
         
           log("CurrentAuthRequested");
           log(state.toString());
-          log("user.uid: ${user.uid}");
+          log("user.uid: ${user.userID}");
       }
     );
 

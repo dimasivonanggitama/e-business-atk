@@ -5,12 +5,14 @@ class CustomButtonIncreaseDecrease extends StatelessWidget {
   final Function()? increaseOnTap;
   final bool isBigSize;
   final bool isDisableBottomPadding;
+  final int productQuantityCart;
 
   CustomButtonIncreaseDecrease({
     this.decreaseOnTap,
     this.increaseOnTap,
     this.isBigSize = false,
-    this.isDisableBottomPadding = false
+    this.isDisableBottomPadding = false,
+    required this.productQuantityCart
   });
 
   @override
@@ -59,7 +61,7 @@ class CustomButtonIncreaseDecrease extends StatelessWidget {
             backgroundColor: Colors.transparent,
             radius: 15,
             child: Text(
-              "1",
+              productQuantityCart.toString(),
               style: TextStyle(
                 fontSize: quantityFontSize, // default = 14
                 color: Colors.black

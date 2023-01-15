@@ -3,7 +3,8 @@
    <application
         android:label="e_business_atk"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,4 +32,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <!-- <application
+        android:label="midtrans_sdk_example"
+        tools:replace="android:label"
+        android:theme="@style/AppTheme"
+    /> -->
 </manifest>

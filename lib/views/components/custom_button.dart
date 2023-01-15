@@ -7,10 +7,11 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final IconData? icon;
   final double iconSize;
-  final bool isDisableBottomPadding;
-  final bool isDisableLeftPadding;
-  final bool isDisableRightPadding;
-  final bool isDisableTopPadding;
+  final bool isBottomPaddingDisabled;
+  final bool isButtonDisabled;
+  final bool isLeftPaddingDisabled;
+  final bool isRightPaddingDisabled;
+  final bool isTopPaddingDisabled;
   final double minWidth = 120;
   final Function()? onTap;
   final String text;
@@ -25,10 +26,11 @@ class CustomButton extends StatelessWidget {
     this.color = Colors.white, 
     this.icon = null,
     this.iconSize = 24,
-    this.isDisableBottomPadding = false,
-    this.isDisableLeftPadding = false,
-    this.isDisableRightPadding = false,
-    this.isDisableTopPadding = true,
+    this.isBottomPaddingDisabled = false,
+    this.isButtonDisabled = false,
+    this.isLeftPaddingDisabled = false,
+    this.isRightPaddingDisabled = false,
+    this.isTopPaddingDisabled = true,
     this.onTap,
     required this.text,
     this.textBold = false,
@@ -42,10 +44,10 @@ class CustomButton extends StatelessWidget {
     double leftPadding = 15;
     double rightPadding = 15;
     double topPadding = 15;
-    if (isDisableBottomPadding) bottomPadding = 0;
-    if (isDisableLeftPadding) leftPadding = 0;
-    if (isDisableRightPadding) rightPadding = 0;
-    if (isDisableTopPadding) topPadding = 0;
+    if (isBottomPaddingDisabled) bottomPadding = 0;
+    if (isLeftPaddingDisabled) leftPadding = 0;
+    if (isRightPaddingDisabled) rightPadding = 0;
+    if (isTopPaddingDisabled) topPadding = 0;
     return Padding(
       padding: EdgeInsets.fromLTRB(leftPadding, topPadding, rightPadding, bottomPadding), // default = 15, 0, 15, 15
       child: Container(
@@ -68,10 +70,10 @@ class CustomButton extends StatelessWidget {
           ]
         ),
         child: Material(
-          color: color,
+          color: isButtonDisabled? Colors.grey.shade300 : color,
           borderRadius: BorderRadius.circular(15),
           child: InkWell(
-            onTap: onTap,
+            onTap: isButtonDisabled? null : onTap,
             splashColor: Colors.black.withOpacity(0.1),
             borderRadius: BorderRadius.circular(15),
             child: Padding(

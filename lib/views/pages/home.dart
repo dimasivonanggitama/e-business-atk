@@ -7,26 +7,35 @@ import 'dart:developer';
 
 import 'package:ebusiness_atk_mobile/bloc/form/auth_form/auth_form_bloc.dart';
 import 'package:ebusiness_atk_mobile/views/components/preset_snackbar.dart';
+import 'package:ebusiness_atk_mobile/views/pages/admin/controlPanel.dart';
+// import 'package:ebusiness_atk_mobile/views/pages/(backup)%20keranjang.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '(backup) beliatk_hasilpencarian.dart';
 import '../../bloc/auth_condition/auth_condition_bloc.dart';
 // import '../../bloc/form/form_bloc.dart';
+import '../../bloc/cart/cart_bloc.dart';
+import '../../bloc/catalogue/catalogue_bloc.dart';
+// import '../../bloc/katalog/katalog_bloc.dart';
+import '../../bloc/order/order_bloc.dart';
+import '../../bloc/print_service/print_service_bloc.dart';
 import 'admin/tambahProduk.dart';
-import 'admin/katalogProduk.dart';
+import 'admin/product_catalogue_admin.dart';
 import 'auth_form.dart';
-import 'beliatk_hasilpencarian.dart';
+import 'order.dart';
+import 'product_catalogue.dart';
 import 'beliatk_kategori.dart';
-import 'print_upload.dart';
+import 'cart.dart';
+import 'print_service.dart';
 import 'test.dart';
 
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,265 +43,231 @@ class _homePageState extends State<homePage> {
         centerTitle: true,
         title: Center(child: Text("ATK Pak Eko")), 
         actions: [
-            // context.read<AuthFormBloc>().add(AuthStarted());
-
-          // BlocListener<AuthConditionBloc, AuthConditionState>(
-          //   listener: (context, state) {
-          //     context.read<AuthConditionBloc>().add(CurrentAuthRequested());
-          //     // List<String> menu = ["a", "b"];
-                      
-          //             if (state is AuthFailure) log(state.toString());
-          //             if (state is AuthSuccess) log(state.toString());
-
-          //   },
-          //   child: 
-            BlocBuilder<AuthConditionBloc, AuthConditionState>(
-              builder: (context, state) {
-                context.read<AuthConditionBloc>().add(CurrentAuthRequested());
-                // log("state.isAuthValid: ${state.isAuthValid}");
-                return PopupMenuButton<int>(
-                  // onSelected: (value) => handleClick(value, context),
-                  itemBuilder: (BuildContext context) => [
-                    //V1: return {'Tambah Produk', 'Katalog Produk', 'Login', 'Katalog Produk User (Old)', 'Test Page'}.map((String choice) {
-                      //V2: 
-                  //   return {
-                  //     'Tambah Produk',
-                  //     'Katalog Produk',
-                  //     (!state.isAuthValid)? 'Masuk' : 'Keluar'
-                  //     // else if (state.isAuthValid) 'Keluar',
-                  //     'Katalog Produk User (Old)',
-                  //     'Test Page'
-                  //   }.map((String choice) {
-                  //     return PopupMenuItem<String>(
-                  //       value: choice,
-                  //       child: Text(choice),
-                  //     );
-                  //   }).toList();
-                  // },
-                    PopupMenuItem( 
-                      value: 1,
-                      child: Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Tambah Produk")
-                        ],
-                      ),
+          BlocBuilder<AuthConditionBloc, AuthConditionState>(
+            builder: (context, state) {
+              context.read<AuthConditionBloc>().add(CurrentAuthRequested());
+              return PopupMenuButton<int>(
+                itemBuilder: (BuildContext context) => [
+                  if ((state is AuthSuccess) && state.status != "admin") PopupMenuItem( 
+                    value: 1,
+                    child: Row(
+                      children: [
+                        Icon(Icons.receipt, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Daftar Pemesanan")
+                      ],
                     ),
-                    PopupMenuItem(
-                      value: 2,
-                      child: Row(  
-                        children: [
-                          Icon(Icons.chrome_reader_mode, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Katalog Produk")
-                        ],
-                      ),
+                  ),
+                  if ((state is AuthSuccess) && state.status != "admin") PopupMenuItem( 
+                    value: 2,
+                    child: Row(
+                      children: [
+                        Icon(Icons.shopping_cart, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Keranjang")
+                      ],
                     ),
-                    PopupMenuItem(
-                      value: 3,
-                      child: Row(  
-                        children: [
-                          Icon(Icons.chrome_reader_mode, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Katalog Produk User (Old)")
-                        ],
-                      ),
+                  ),
+                  if ((state is AuthSuccess) && state.status != "regular") PopupMenuItem( 
+                  // PopupMenuItem( 
+                    value: 3,
+                    child: Row(
+                      children: [
+                        Icon(Icons.local_police, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Control Panel")
+                      ],
                     ),
-                    if (state is Unauthorized) PopupMenuItem(
-                      value: 4,
-                      child: Row(  
-                        children: [
-                          Icon(Icons.chrome_reader_mode, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Masuk")
-                        ],
-                      ),
+                  ),
+                  if ((state is AuthSuccess) && state.status == "superadmin") PopupMenuItem(
+                    value: 4,
+                    child: Row(  
+                      children: [
+                        Icon(Icons.chrome_reader_mode, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Katalog Produk User (Old)")
+                      ],
                     ),
-                    if (state is AuthSuccess) PopupMenuItem(
-                      value: 5,
-                      child: Row(  
-                        children: [
-                          Icon(Icons.chrome_reader_mode, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Keluar")
-                        ],
-                      ),
+                  ),
+                  if (state is Unauthorized) PopupMenuItem(
+                    value: 5,
+                    child: Row(  
+                      children: [
+                        Icon(Icons.key, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Masuk")
+                      ],
                     ),
-                    PopupMenuItem(
-                      value: 5,
-                      child: Row(  
-                        children: [
-                          Icon(Icons.chrome_reader_mode, color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Test Page")
-                        ],
-                      ),
+                  ),
+                  if (state is AuthSuccess) PopupMenuItem(
+                    value: 6,
+                    child: Row(  
+                      children: [
+                        Icon(Icons.power_settings_new, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Log Out")
+                      ],
                     ),
-                  ],
-                  onSelected: (value) async {
-                    // if value 1 show dialog
-                    // if (value == 1) {
-                    //   _showDialog(context);
-                    //   // if value 2 show dialog
-                    // } else if (value == 2) {
-                    //   _showDialog(context);
-                    // }
-                    
-                    switch (value) {
-                      case 1:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return tambahProduk(status: "add");
-                        }));
-                        break;
-                      // case 'Tambah Produk': return tambahProduk();
-                      case 2:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return katalogProduk();
-                        }));
-                        break;
-                      case 3:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return beliatk_hasilpencarianPageOld();
-                        }));
-                        break;
-                      case 4:
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return AuthFormPage();
-                        }));
-                        break;
-                      case 5:
-                        context.read<AuthConditionBloc>().add(AuthSignedOut());
-                        PresetSnackbar(context: context, message: "Anda telah keluar dari akun");
-                        // context.read<AuthConditionBloc>().add(CurrentAuthRequested());
-                        // return Text("");
-                        break;
-                      case 6:
+                  ),
+                  if ((state is AuthSuccess) && state.status == "superadmin") PopupMenuItem(
+                    value: 7,
+                    child: Row(  
+                      children: [
+                        Icon(Icons.chrome_reader_mode, color: Colors.black),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Test Page")
+                      ],
+                    ),
+                  ),
+                ],
+                onSelected: (value) async {
+                  switch (value) {
+                    // case 'Tambah Produk': return tambahProduk();
+                    case 1:
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return testPage();
-                        }));
-                        break;
-                      default:
-                        // return Text("");
-                    }
+                        // if (state is AuthSuccess) context.read<OrderBloc>().add(OrderRequested(state.uid));
+                        if (state is AuthSuccess) context.read<OrderBloc>().add(OrdersRequested(state.uid));
+                        return OrderPage();
+                      }));
+                      break;
+                    case 2:
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        if (state is AuthSuccess) context.read<CartBloc>().add(CartRequested(state.uid));
+                        return CartPage();
+                      }));
+                      break;
+                    case 3:
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        // return tambahProduk(status: "add");
+                        return ControlPanelPage();
+                      }));
+                      break;
+                    case 4:
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return beliatk_hasilpencarianPageOld();
+                      }));
+                      break;
+                    case 5:
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return AuthFormPage();
+                      }));
+                      break;
+                    case 6:
+                      context.read<AuthConditionBloc>().add(AuthSignedOut());
+                      PresetSnackbar(context: context, message: "Anda telah keluar dari akun");
+                      // context.read<AuthConditionBloc>().add(CurrentAuthRequested());
+                      // return Text("");
+                      break;
+                    case 7:
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return testPage();
+                      }));
+                      break;
+                    default:
+                      // return Text("");
+                  }
                 },
-                );
-              }
-            ),
-          // ),
+              );
+            }
+          ),
         ]
       ),
       body: Container(
-        decoration: BoxDecoration(
-          // color: Colors.white
-          color: Colors.amber
-        ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Material(
-              borderRadius: BorderRadius.circular(15),
-              elevation: 5,
-              child: Container(
-                  //Card
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  child: Material(
+        decoration: BoxDecoration(color: Colors.amber),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
+                Material(
+                  borderRadius: BorderRadius.circular(15),
+                  elevation: 5,
+                  child: Container(
+                    //Card
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                    child: Material(
                       child: InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return print_uploadPage();
-                              // return testPage();
-                              // return tambahProduk();
-                              // return katalogProduk();
-                            }));
-                          },
-                          splashColor: Colors.black.withOpacity(0.1),
-                          child: Column(children: [
+                        onTap: () {
+                          context.read<PrintServiceBloc>().add(ValueResetTriggered());
+                          context.read<PrintServiceBloc>().add(PrintPriceRequested());
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return PrintServicePage();
+                          }));
+                        },
+                        splashColor: Colors.black.withOpacity(0.1),
+                        child: Column(
+                          children: [
                             Ink.image(image: AssetImage('assets/images/home_Print.jpg'), height: 180, width: 360, fit: BoxFit.cover),
                             Padding(
-                                padding: EdgeInsets.all(15),
-                                child: (Text("Print",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ))))
-                          ])))),
+                              padding: EdgeInsets.all(15),
+                              child: (
+                                Text("Print", style: TextStyle(fontSize: 20))
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  ),
+                ),
+              ]
             ),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Material(
-              borderRadius: BorderRadius.circular(15),
-              elevation: 5,
-              child: Container(
-                  //Card
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  child: Material(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
+                Material(
+                  borderRadius: BorderRadius.circular(15),
+                  elevation: 5,
+                  child: Container(
+                    //Card
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                    child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return beliatk_hasilpencarianPage();
-                            }));
-                          },
-                          splashColor: Colors.black.withOpacity(0.1),
-                          child: Column(children: [Ink.image(image: AssetImage('assets/images/home_Beli ATK.jpg'), height: 180, width: 360, fit: BoxFit.cover), Padding(padding: EdgeInsets.all(15), child: (Text("Beli ATK", style: TextStyle(fontSize: 20))))])))),
+                        onTap: () {
+                          context.read<CatalogueBloc>().add(CatalogueRequested(context));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ProductCataloguePage();
+                          }));
+                        },
+                        splashColor: Colors.black.withOpacity(0.1),
+                        child: Column(
+                          children: [
+                            Ink.image(image: AssetImage('assets/images/home_Beli ATK.jpg'), height: 180, width: 360, fit: BoxFit.cover), 
+                            Padding(
+                              padding: EdgeInsets.all(15), 
+                              child: (
+                                Text("Beli ATK", style: TextStyle(fontSize: 20))
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  ),
+                ),
+              ]
             ),
-          ]),
-        ]),
+          ]
+        ),
       ),
     );
   }
-
-  // void handleClick(String value, BuildContext currentContext) {
-  //     // context.read
-  //     switch (value) {
-  //       case 'Tambah Produk':
-  //         Navigator.push(currentContext, MaterialPageRoute(builder: (context) {
-  //           return tambahProduk(status: "add");
-  //         }));
-  //         break;
-  //       // case 'Tambah Produk': return tambahProduk();
-  //       case 'Katalog Produk':
-  //         Navigator.push(currentContext, MaterialPageRoute(builder: (context) {
-  //         return katalogProduk();
-  //         }));
-  //         break;
-  //       case 'Katalog Produk User (Old)':
-  //         Navigator.push(currentContext, MaterialPageRoute(builder: (context) {
-  //         return beliatk_hasilpencarianPageOld();
-  //         }));
-  //         break;
-  //       case 'Masuk':
-  //       Navigator.push(currentContext, MaterialPageRoute(builder: (context) {
-  //         return AuthFormPage();
-  //         }));
-  //         break;
-  //       case 'Keluar':
-  //         currentContext.read<AuthFormBloc>().add(AuthSignedOut());
-  //         PresetSnackbar(context: currentContext, message: "Anda telah keluar dari akun");
-  //         context.read<AuthConditionBloc>().add(CurrentAuthRequested());
-  //         // return Text("");
-  //         break;
-  //       case 'Test Page':
-  //       Navigator.push(currentContext, MaterialPageRoute(builder: (context) {
-  //         return testPage();
-  //         }));
-  //         break;
-  //       default:
-  //         // return Text("");
-  //     }
-    
-  // }
 }

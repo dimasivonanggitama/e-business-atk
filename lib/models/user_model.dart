@@ -1,51 +1,52 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  String? uid;
-  // bool? isVerified;
-  final String? address;
+  String? address;
   final String? email;
+  final String? name;
   String? password;
-  final String? fullName;
-  final String? phoneNumber;
-  // UserModel({this.uid, this.email, this.password, this.displayName, this.age, this.isVerified});
-  UserModel({this.uid, this.address, this.email, this.password, this.fullName, this.phoneNumber});
+  String? phoneNumber;
+  final String? status;
+  final String? userID;
+  UserModel({this.address, this.email, this.password, this.name, this.phoneNumber, this.status, this.userID});
+
+  UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
+    : userID      = doc.id,
+      address     = doc.data()!["address"],
+      email       = doc.data()!["email"],
+      name        = doc.data()!["name"],
+      status      = doc.data()!["status"],
+      password    = doc.data()!["password"],
+      phoneNumber = doc.data()!["phoneNumber"];
 
   Map<String, dynamic> toMap() {
     return {
-      'alamat': address,
+      'address': address,
       'email': email,
-      'nama': fullName,
+      'name': name,
       'password': password,
-      'nomorHP': phoneNumber,
+      'phoneNumber': phoneNumber,
+      'status': status
     };
   }
-
-  UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-    : uid = doc.id,
-      address = doc.data()!["alamat"],
-      email = doc.data()!["email"],
-      fullName = doc.data()!["nama"],
-      phoneNumber = doc.data()!["nomorHP"];
       
   UserModel currentValue({
-    // bool? isVerified,
-    String? uid,
     String? address,
     String? email,
-    String? fullName,
+    String? name,
     String? password,
     String? phoneNumber,
     String? status,
+    String? userID
   }) {
     return UserModel(
-      uid: uid ?? this.uid,
       address: address ?? this.address,
       email: email ?? this.email,
-      fullName: fullName ?? this.fullName,
+      name: name ?? this.name,
       password: password ?? this.password,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      // isVerified: isVerified ?? this.isVerified
+      status: status ?? this.status,
+      userID: userID ?? this.userID
     );
   }
 }

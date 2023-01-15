@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'custom_button.dart';
 
-class PresetPopUpAlert {
+class PresetPopUpAlertBackup {
   Future dialogFuture(BuildContext context, {required String type}) {
     String buttonText = "";
     String contentText = "";

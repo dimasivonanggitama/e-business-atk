@@ -1,48 +1,32 @@
 import 'package:flutter/material.dart';
 
-class PresetPopUpAlert {
-  final BuildContext context;
-  final String description;
-  final void Function()? firstActionButton;
-  final String firstActionButtonText;
-  final void Function()? secondActionButton;
-  final String? secondActionButtonText;
-  final String? title;
-
-  PresetPopUpAlert({
-    required this.context, 
-    this.title, 
-    required this.description, 
-    this.firstActionButton, 
-    required this.firstActionButtonText, 
-    this.secondActionButton,
-    this.secondActionButtonText
-  }) {
-    showDialog(
-      context: context, 
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title!),
-        content: Text(description),
-        actions: <Widget>[
-          if (secondActionButton != null) TextButton(
-            onPressed: () {
-              Navigator.pop(context, 'OK');
-              secondActionButton;
-            },
-            child: Text(secondActionButtonText!),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, 'OK');
-              // firstActionButton!();
-              firstActionButton;
-            },
-            child: Text(firstActionButtonText),
-          ),
-        ],
-      ),
-    );
-  }
+Future PresetPopUpAlert({
+  required BuildContext context,
+  required String description,
+  void Function()? firstActionButton,
+  required String firstActionButtonText,
+  final void Function()? secondActionButton,
+  final String? secondActionButtonText,
+  required final String? title
+}) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text(title!),
+      content: Text(description),
+      actions: [
+        if (secondActionButton != null) TextButton(
+          onPressed: secondActionButton,
+          child: Text(secondActionButtonText!),
+        ),
+        TextButton(
+          onPressed: firstActionButton,
+          child: Text(firstActionButtonText),
+        ),
+      ],
+    ),
+  );
+}
 
 
 
@@ -134,4 +118,3 @@ class PresetPopUpAlert {
   //     ),
   //   );
   // }
-}

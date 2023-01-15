@@ -36,6 +36,17 @@ class CustomAuthForm extends StatelessWidget {
             listeners: [
               BlocListener<AuthFormBloc, AuthFormInitial>(
                 listener: (context, state) {
+                  // if (state.isFormSubmitted) {
+                  //   showDialog(
+                  //     context: context, 
+                  //     builder: (BuildContext context) {
+                  //       return Padding(
+                  //         padding: EdgeInsets.symmetric(horizontal: 100, vertical: 250),
+                  //         child: CircularProgressIndicator(),
+                  //       );
+                  //     }
+                  //   );
+                  // }
                   if (state.authErrorMessage.isNotEmpty) {
                     PresetPopUpAlert(context: context, description: state.authErrorMessage, firstActionButtonText: "OK", title: "Kesalahan!");
                     // if (state.formStatus == Status.signIn)
@@ -80,11 +91,12 @@ class CustomAuthForm extends StatelessWidget {
                                 onTap: () => context.read<AuthFormBloc>().add(SignInTabSelected()),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      // border: Border(
-                                      //   top: BorderSide(color: Colors.black, style: BorderStyle.solid)
-                                      // ),
-                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-                                      color: state.signInTabColor),
+                                    // border: Border(
+                                    //   top: BorderSide(color: Colors.black, style: BorderStyle.solid)
+                                    // ),
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+                                    color: state.signInTabColor
+                                  ),
                                   child: Padding(
                                     padding: EdgeInsets.all(15),
                                     child: Text("Masuk"),

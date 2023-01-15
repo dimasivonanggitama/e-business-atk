@@ -25,6 +25,7 @@ dependencies:
   cloud_firestore: ^3.4.3
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
+  file_picker: ^5.2.4
   firebase_auth: ^3.7.0
   firebase_core: ^1.20.0
   firebase_storage: ^10.3.4
@@ -33,9 +34,10 @@ dependencies:
   flutter_bloc: ^8.0.1
   google_fonts: ^3.0.1
   google_sign_in: ^5.4.2
-  http: ^0.13.4
+  http: ^0.13.5
   image_picker: ^0.8.5+3
   intl: ^0.17.0
+  midtrans_sdk: ^0.3.4
   sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
@@ -58,6 +60,7 @@ flutter:
   assets:
     - assets/images/home_Beli ATK.jpg
     - assets/images/home_Print.jpg
+    - assets/images/home_Print_small.jpg
     - assets/images/sign-in.png
     - assets/images/main-img.png
   # An image asset can refer to one or more resolution-specific "variants", see

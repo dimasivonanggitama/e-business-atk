@@ -1,14 +1,19 @@
 // import 'package:e_business_atk/views/pages/home.dart';
 
 import 'package:ebusiness_atk_mobile/bloc/form/auth_form/auth_form_bloc.dart';
-import 'package:ebusiness_atk_mobile/bloc/form/form_bloc.dart';
-import 'package:ebusiness_atk_mobile/bloc/katalog/katalog_bloc.dart';
+import 'package:ebusiness_atk_mobile/bloc/order/order_bloc.dart';
 import 'package:ebusiness_atk_mobile/repository/cart_repository.dart';
-import 'package:ebusiness_atk_mobile/repository/repository.dart';
+import 'package:ebusiness_atk_mobile/repository/order_repository.dart';
+import 'package:ebusiness_atk_mobile/repository/printPrice_repository.dart';
+import 'package:ebusiness_atk_mobile/repository/product_repository.dart';
 import 'package:ebusiness_atk_mobile/repository/user_repository.dart';
 
 import 'bloc/auth_condition/auth_condition_bloc.dart';
 import 'bloc/cart/cart_bloc.dart';
+import 'bloc/catalogue/catalogue_bloc.dart';
+import 'bloc/dbms_firestore/dbms_firestore_bloc.dart';
+import 'bloc/form/product_form/product_form_bloc.dart';
+import 'bloc/print_service/print_service_bloc.dart';
 import 'features/authentication/authentication_repository_impl.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +25,14 @@ import 'features/database/bloc/database_bloc.dart';
 // import 'features/database/database_repository_impl.dart';
 // import 'features/form-validation/bloc/form_bloc.dart';
 
+import 'repository/dbms_firebase_repository.dart';
 import 'views/pages/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyApp());
+  runApp(Main());
 
   // BlocOverrides.runZoned(
   //   () => runApp(
@@ -53,7 +59,7 @@ void main() async {
   
 }
 
-class MyApp extends StatelessWidget {
+class Main extends StatelessWidget {
   @override
   
   Widget build(BuildContext context) {
@@ -66,30 +72,27 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthFormBloc(UserRepository())
         ),
         BlocProvider<CartBloc>(
-          create: (context) => CartBloc(CartRepository())
+          create: (context) => CartBloc(CartRepository(), OrderRepository(), ProductRepository())
         ),
-        BlocProvider<FormBloc>(
-          create: (context) => FormBloc(DatabaseRepository())
+        BlocProvider<CatalogueBloc>(
+          create: (context) => CatalogueBloc(ProductRepository())
         ),
-        BlocProvider<KatalogBloc>(
-          create: (context) => KatalogBloc(DatabaseRepository())
+        BlocProvider<DBMSFirestoreBloc>(
+          create: (context) => DBMSFirestoreBloc(DBMSFirestoreRepository())
+        ),
+        BlocProvider<OrderBloc>(
+          create: (context) => OrderBloc(CartRepository(), OrderRepository(), ProductRepository(), UserRepository())
+        ),
+        BlocProvider<PrintServiceBloc>(
+          create: (context) => PrintServiceBloc(PrintPriceRepository())
+        ),
+        BlocProvider<ProductFormBloc>(
+          create: (context) => ProductFormBloc(ProductRepository())
         ),
       ],
       child: MaterialApp(
-        home: homePage()
+        home: HomePage()
       ),
-    );
-  }
-
-  void createTitle(String title) {
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          title, 
-          style: TextStyle(fontSize: 30)
-        ) 
-      ]
     );
   }
 }
