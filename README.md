@@ -1,7 +1,12 @@
 # e_business_atk
 
-A new Flutter project.
+Sebuah aplikasi berbasis mobile yang menaungi layanan pembelian ATK dan layanan print pada sebuah toko ATK. 
+Aplikasi ini dapat:
+• Melakukan CRUD pada katalog produk ATK, cart (keranjang), harga produk dan layanan print
+• Melakukan submit file pada layanan print
+• Melakukan update status pemesanan
 
+-----------------------------------------------------------
 ## Getting Started
 
 This project is a starting point for a Flutter application.
